@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phone to Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div class="container p-3">
+      <div class="row">
+        <div class="col-sm p-1">
+          <div class="row text-center mb-4">
+            <h1 class="display-5 fw-bold text-body-emphasis mb-4">
+              Start messanger chat by phone number
+              </h1>
+              <p class='lead mb-4 '>
+              Stop creating temporary contacts in your address book every time you need to send a message.
+              </p>
+          </div>
+
+
+          <div class="row mx-auto mb-4">
+          Step 1: Type or paste phone number.
+          </div>
+
+          <div class="row text-center mb-4 form-floating">
+            <input id='phone-number' type='text' role='phone' class='form-control'/>
+            <label for='phone-number'>Phone</label>
+          </div>
+
+
+          <div class="row mx-auto mb-4">
+          Step 2: Click on messanger to open chat
+          </div>
+
+          <div class="row mx-auto mb-4">
+            <div class='col-sm mx-auto text-center'>
+              <a role='tg' href="tg://resolve?phone=XXXX">
+                <img class='mx-auto' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png' height='128px' width='128px'/>
+              </a>
+            </div>
+
+            <div class='col-sm mx-auto text-center'>
+              <a role='wa' href="whatsapp://send?phone=XXXX">
+                <img class='mx-auto' src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png' height='128px' width='128px'/>
+              </a>
+            </div>
+          </div>
+
+          <div class='row mx-auto mb-4'>
+            <p> PS: don't forget to <a href='https://www.macrumors.com/how-to/add-a-web-link-to-home-screen-iphone-ipad/'>add</a> this page to your homescreen
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+    <script>
+      function updateTelegram(val){
+        $('[role=tg').attr('href', "tg://resolve?phone="+val);
+      }
+
+      function updateWhatsapp(val){
+        $('[role=wa').attr('href', "whatsapp://send?phone="+val);
+      }
+
+      function updateLinks(x){
+        const phone = $(x.target).val();
+        const cleanPhone = phone.replace(/[^0-9]/g, '');
+        updateTelegram(cleanPhone);
+        updateWhatsapp(cleanPhone);
+      }
+
+      $(document).ready(()=>{
+        $('[role=phone]').on('keyup', updateLinks);
+        $('[role=phone]').on('change', updateLinks).trigger('change');
+      });
+    </script>
+  </body>
+</html>
