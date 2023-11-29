@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>
+      Media Center
+    </title>
+
+    <script   src="https://code.jquery.com/jquery-3.7.1.js"   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="   crossorigin="anonymous"></script>
+		<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+  </head>
+  <body>
+		<form>
+			<div class="mb-3">
+				<label for="host" class="form-label">Host</label>
+				<input type="text" id='host' class="form-control" role="host" >
+			</div>
+			<div class="mb-3">
+				<label for="token" class="form-label">Token</label>
+				<input type="text" role='token' class="form-control" id="token">
+			</div>
+			<button type="button" class="btn btn-primary" role='load'>Load</button>
+		</form>
+		<table id="media-table" class="display">
+				<thead>
+						<tr>
+								<th>id</th>
+								<th>title</th>
+								<th>size</th>
+						</tr>
+				</thead>
+		</table>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+    class App{
+      run(){
+				const credential_repo = new CredentialRepo();
+				new CredentialForm(credential_repo).init();
+      }
+    }
+
+
+
+
+		class CredentialRepo{
+			constructor(){
+				this.db = window.localStorage;
+			}
+
+			save(credentials){
+				this.db.setItem('host', credentials.host);
+				this.db.setItem('token',credentials.token);
+			}
+
+			get(){
+				return {
+					host: this.db.getItem('host'),
+					token: this.db.getItem('token')
+				}
+			}
+		}
+
+		class CredentialForm{
+			constructor(repo){
+				this.repo = repo;
+			}
+
+			init(){
+				this.set(this.repo.get());
+
+				$('[role=load]').click(()=>{
+					const credentials = this.get();
+					this.repo.save(credentials);
+					new IndexMedia(credentials).render();
+				});
+			}
+
+			set(credentials){
+				$('[role=host]').val(credentials.host);
+				$('[role=token]').val(credentials.token);
+			}
+
+			get(){
+				return {
+					host: $('[role=host').val(),
+					token: $('[role=token').val()
+				}
+			}
+		}
+
+		class IndexMedia {
+			constructor(credentials){
+				this.credentials = credentials;
+				this.media_repo = new MediaRepo(credentials);
+			}
+
+			render(){
+					this.media_repo.find_all().then( data=>{
+						this.render_table(data);
+					});
+			}
+
+			render_table(data){
+					const self = this;
+
+					const table = new DataTable('#media-table', {
+							responsive: true,
+							data:data,
+							buttons: ['view'],
+							columns: [
+											{ data: 'id' },
+											{ data: 'desc' },
+											{ data: 'size' },
+									],
+					});
+
+					$('#media-table tbody').on('click', 'tr', function () {
+						const id = table.row(this).data().id ;
+						new ShowMedia(self.media_repo).show(id);
+					});
+			}
+		}
+
+		class ShowMedia {
+			constructor(media_repo){
+				this.media_repo = media_repo;
+			}
+
+			show(id){
+				this.media_repo.get(id).then( data=>{
+					window.location = data.url;
+				});
+			}
+
+		}
+
+		class MediaRepo{
+			constructor(credentials){
+				this.credentials = credentials;
+				this.base = "https://"+credentials.host;
+			}
+
+			find_all(){
+        return $.ajax({
+          url: this.base+ "/media.json",
+          method: 'GET',  dataType: 'json',
+          headers: {
+            'Auth-Token': this.credentials.token
+          }
+        });
+			}
+
+			get(id){
+        return $.ajax({
+          url: this.base+ "/media/" + id,
+          method: 'GET',  dataType: 'json',
+          headers: {
+            'Auth-Token': this.credentials.token
+          }
+        });
+
+			}
+		}
+
+    function create_app(){
+      return new App();
+    }
+
+    var app = create_app();
+
+    $(document).ready(
+      function(){
+        app.run()
+      }
+    )
+    </script>
+
+  </body>
+</html>
