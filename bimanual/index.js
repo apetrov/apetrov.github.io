@@ -78,7 +78,7 @@ class Track {
     let y = 0;
 
     // loop over points
-    
+
 
     var left = [];
     var right = [];
@@ -88,11 +88,11 @@ class Track {
     function sigmoid(x) {
       return 1 / (1 + Math.exp(-x));
     }
-    
+
 
     for(let i =0; i < points.length; i++){
       let p = points[i];
-      
+
       if(p == 0){
         var cp = {x: this.midpoint + x * 30, y: y};
         left.push({x: cp.x - this.w, y: cp.y});
@@ -107,8 +107,8 @@ class Track {
       x += p;
       y += step;
     };
-    
-    return left.concat(right.reverse());   
+
+    return left.concat(right.reverse());
   }
 
 
@@ -116,10 +116,10 @@ class Track {
   draw(ctx, t){
     //ctx.fillStyle = '#dddddd';
     //ctx.fillRect(this.midpoint - this.range/2, 0, this.range, this.max_y);
-    
+
     const vertices = this.points;
 
-    
+
     // Draw the polygon
     ctx.beginPath();
     ctx.moveTo(vertices[0].x, vertices[0].y);
@@ -127,7 +127,7 @@ class Track {
       ctx.lineTo(vertices[i].x, vertices[i].y - t * 3.0);
     }
     ctx.closePath();
-    
+
     // Style the polygon
     ctx.fillStyle = '#bb4dff';
     ctx.fill();
@@ -143,27 +143,56 @@ class Game {
 
   init(controllerIndex){
     this.canvas = this.document.getElementById("gameArea");
+    this.canvas.style.display = "block";
+    this.document.getElementById('label').style.display = 'none';
+
     this.ctx = this.canvas.getContext("2d");
 
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
     this.controllerIndex = controllerIndex;
+    
+    const start = [0,0,0];
+
+    const outside = [
+        -2, -2, 
+        2, 2,
+        0,
+        -3, -3,
+        3, 3,
+        0,
+        -4, -3,
+        4, 3,
+        0,
+    ];
+
+    const inside = [
+        2, 2,
+        -2, -2, 
+        0,
+        3, 3,
+        -3, -3,
+        0,
+        4, 3,
+        -4, -3,
+        0,
+    ];
 
     let w = this.canvas.width/13;
     this.t = 0;
     this.leftCar = new Car(
-      new Point(this.canvas.width/4,30), this.canvas.width, 0, 1, 
+      new Point(this.canvas.width/4,30), this.canvas.width, 0, 1,
       new LeftSide(this.canvas.width),
-      new Track(this.canvas.width/4, this.canvas.width/2 * 0.9, this.canvas.height, w, 
-      [0, 0, 0, 0, 0, -3, 0, 2, -5, 4, -3, 0, 0, 1, 0, -2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, -2, 0, 0, 0, 0, 0, 3, 3, -4, 3, 5, -1, 0, 2, -2, -2, 2, 0, 0, -1, -3, 0, 5, 1, 0, 0, -1, -2, -1, 0, -2, 2, -4, 0, 1, 2, -2, 2, 5, -4, -3, 0, -3, 1, 0, -2, 0, 2, 0, 0, 0, 1, 2, 0, 0, 4, -4, 0, 0, 0, 1, -1, 0, 0, 0, 0, 4, 0, 0, 1, 0, -4, 0, 0, 2, 0, 0, 0] 
+      new Track(this.canvas.width/4, this.canvas.width/2 * 0.9, this.canvas.height, w,
+        start.concat(outside, inside,outside, inside, inside, outside)
       )
     );
     this.rightCar = new Car(
-      new Point(this.canvas.width/4*3, 30),this.canvas.width, 2, 3, 
+      new Point(this.canvas.width/4*3, 30),this.canvas.width, 2, 3,
       new RightSide(this.canvas.width),
-      new Track(3*this.canvas.width/4, this.canvas.width/2 * 0.8, this.canvas.height, w, 
-      [0, 0, 0, 0, -4, 0, 4, 0, -1, 4, 1, 0, -5, 2, -1, 5, 1, 0, 0, -1, 0, 0, -2, 2, 1, -2, -1, 0, 0, 0, 0, -3, -4, 4, 0, 0, -1, 2, -4, -2, 3, 1, -3, 0, 2, 0, -1, -1, 4, -4, 2, -3, 0, -1, 4, -4, 0, 2, 2, 0, -3, 5, 3, -1, 0, 0, 0, 1, 1, -1, 0, 1, -4, 0, 3, 0, -5, -3, 0, 0, 0, 0, 0, 0, 2, -1, 0, -2, 0, 0, 0, 0, 0, 0, 2, -1, 1, 0, 1, 0, 0, 1, 0, 1]
+      new Track(3*this.canvas.width/4, this.canvas.width/2 * 0.8, this.canvas.height, w,
+        start.concat(outside, inside,inside, outside, outside, inside)
       )
     );
   }
