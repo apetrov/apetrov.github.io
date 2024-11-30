@@ -12,130 +12,253 @@
         }
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 1024px;
             margin-top: 20px;
         }
         th, td {
-            border: 1px solid black;
             text-align: center;
             padding: 5px;
+            font-size: 30px;
         }
-        .handwriting-area {
-            position: relative;
-            height: 100px;
-            width: 100%;
+
+        .top-line {
+            padding-top: 14px;
+            border-bottom: 1px dashed gray;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
         }
-        .handwriting-area .guidelines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
+
+        .bottom-line {
+            padding-top:14px;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
         }
-        .guidelines .line {
-            height: 1px;
-            background-color: black;
+        .check-mark {
+          width: 20px;
+          border:1px solid black;
         }
-        .guidelines .dash {
-            height: 1px;
-            background-color: black;
-            border-style: dashed;
-            border-width: 1px 0 0 0;
-        }
-        .input-container {
-            margin-bottom: 20px;
-        }
-        textarea {
-            width: 300px;
-            height: 50px;
-            resize: none;
-        }
-        button {
-            padding: 10px;
-            cursor: pointer;
-        }
-        /* Print styles */
-        @media print {
-            body {
-                margin: 0;
-                font-size: 12px;
-            }
-            .input-container {
-                display: none;
-            }
-            table {
-                width: 100%;
-            }
-        }
+
     </style>
-    <script>
-      $(document).ready(function(){
-        const template = `
-          <tr> 
-            <td><b>{word}</b></td> 
-            <td>
-              <div class="handwriting-area"> 
-                <div class="guidelines"> 
-                  <div class="dash"></div> 
-                  <div class="line"></div> 
-                  <div class="dash"></div> 
-                </div> 
-              </div> 
-            </td> 
-            <td>
-              <div class="handwriting-area"> 
-                <div class="guidelines"> 
-                  <div class="dash"></div> 
-                  <div class="line"></div> 
-                  <div class="dash"></div> 
-                </div> 
-              </div> 
-            </td> 
-            <td>
-              <div class="handwriting-area"> 
-                <div class="guidelines"> 
-                  <div class="dash"></div> 
-                  <div class="line"></div> 
-                  <div class="dash"></div> 
-                </div> 
-              </div> 
-            </td> 
-          </tr>`;
-
-        $('#add-word').click(function(){
-          const words = $('#word').val().trim();
-          if (!words) {
-            alert('Please enter a word!');
-            return;
-          }
-
-          words.split(' ').forEach(function(word){
-            $('#table-body').append(template.replace(/{word}/g, word));
-          });
-
-          $('#word').val(''); // Clear input
-        });
-      });
-    </script>
 </head>
 <body>
-    <div class="input-container">
-        <textarea id="word" placeholder="Enter a word or phrase"></textarea>
-        <button id="add-word">Add Word</button>
-    </div>
     <table>
         <thead>
             <tr>
                 <th style="width: 200px;">Word</th>
-                <th>Day 1</th>
-                <th>Day 2</th>
-                <th>Day 3</th>
+                <th colspan=2>Day 1</th>
+                <th colspan=2 >Day 2</th>
+                <th colspan=2>Day 3</th>
             </tr>
         </thead>
         <tbody id="table-body">
+            <tr>
+              <td rowspan=3> indifferent </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+
+            <tr>
+              <td rowspan=3> infamous </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+            <tr>
+              <td rowspan=3> inexpensive </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+            <tr>
+              <td rowspan=3> insignificant </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+            <tr>
+              <td rowspan=3> incorrent </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+            <tr>
+              <td rowspan=3> inactive </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+            <tr>
+              <td rowspan=3> incomplete </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+            <tr>
+              <td rowspan=3> independent </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+
+            <tr>
+              <td rowspan=3> invisible </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
+            <tr>
+              <td rowspan=3> inconsiderate </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+              <td class='top-line'> </td>
+              <td class='check-mark' rowspan=3> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+            <tr>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+              <td class='bottom-line'> </td>
+            </tr>
+
         </tbody>
     </table>
 </body>
